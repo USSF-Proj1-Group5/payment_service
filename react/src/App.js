@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react'
+import BalancesTable from './BalancesTable';
+import Transactions from './Transactions'
 
 class App extends React.Component {
   constructor(props){
@@ -9,6 +11,7 @@ class App extends React.Component {
       title: '',
     }
   }
+
   async componentDidMount() {
     const response = await fetch(`http://localhost:3001/ping`);
     console.log(response);
@@ -16,22 +19,19 @@ class App extends React.Component {
     console.log(json)
     this.setState({title: json});
   }
+
+
   render(){
-    return (<div className="App">
-          <header className="App-header">
+    return (<div className="">
+          <header className="">
             <img src={logo} className="App-logo" alt="logo" />
             <p>
               {this.state.title}
             </p>
-            <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn React
-            </a>
           </header>
+          <BalancesTable type='user' />
+          <BalancesTable type='contractor' />
+          <Transactions />
         </div>)
   }
     

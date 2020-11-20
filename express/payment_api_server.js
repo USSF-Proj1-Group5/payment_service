@@ -19,7 +19,7 @@ const Pool = require('pg').Pool;
 const pool = new Pool({
     user: 'admin',
     password: 'admin',
-    host: '172.22.0.2',
+    host: '172.25.0.2',
     database: 'payment_db',
 })
 
@@ -29,11 +29,59 @@ app.get('/ping', (req,res) => {
     toSend = JSON.stringify(toSend)
     res.send(toSend)
 })
-pool.query('SELECT * FROM transactions', (error, results) => {
+
+// User Balances
+
+// GET
+// User balances
+app.get('/user_balances', (req, res) => {
+    pool.query('SELECT * FROM user_balances', (error, results) => {
     if (error) {
+        res.status(500)
         throw error;
     }
-    console.log(results.rows)
+    res.status(200).send(results.rows)
+    })
+})
+
+// GET
+// User balance (Singular)
+app.get('/user_balances/:id', (req, res) => {
+    pool.query(`SELECT * FROM user_balances WHERE userid=${req.params.id}`, (error, results) => {
+    if (error) {
+        res.status(500)
+        throw error;
+    }
+    res.status(200).send(results.rows)
+    })
+})
+// UPDATE
+// User Balance
+
+// POST
+// User Balance
+// requires a query parameter "balance"
+app.post('/user_balances/:id?', (req, res) => {
+    pool.query(`INSERT INTO user_balances (userid,balance) VALUES (${req.params.id},${req.query.balance})`, (error, results) => {
+    if (error) {
+        res.status(500)
+        throw error;
+    }
+    res.status(200).send(results.rows)
+    })
+})
+
+// Contractor Balances
+
+// Transactions
+app.get('/transactions', (req, res) => {
+    pool.query('SELECT * FROM transactions', (error, results) => {
+    if (error) {
+        res.status(500)
+        throw error;
+    }
+    res.status(200).send(results.rows)
+    })
 })
 
 
