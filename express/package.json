@@ -4,12 +4,14 @@
   "description": "An express API server for the payments service",
   "main": "payment_api_server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -L"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "pg": "^8.5.1"
   }
 }

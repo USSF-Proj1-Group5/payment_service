@@ -7,14 +7,20 @@ services:
       - 'database'
     ports: 
       - '3001:3001'
+    volumes:
+      - ./express:/api
 
   react:
     build: react/
+    environment: 
+      CHOKIDAR_USEPOLLING: 'true'
     depends_on:
       - 'database'
-    command: npm start
     ports:
       - '3000:3000'
+    volumes:
+      - ./react/public:/app/public
+      - ./react/src:/app/src
 
   database:
     image: postgres:latest
